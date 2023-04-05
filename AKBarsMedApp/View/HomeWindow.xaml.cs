@@ -26,12 +26,14 @@ namespace AKBarsMedApp.View
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
+            HomeLogoIm.Visibility = Visibility.Visible;
             ButtonCloseMenu.Visibility = Visibility.Visible;
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
         }
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
+            HomeLogoIm.Visibility = Visibility.Hidden;
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             ButtonOpenMenu.Visibility = Visibility.Visible;
         }
@@ -40,11 +42,11 @@ namespace AKBarsMedApp.View
         {
             if (ListViewMenu.SelectedIndex == 0)
             {
-                //GridMain.Content = new OrderPage();
+                GridMain.Content = new EmployeePage();
             }
             else if (ListViewMenu.SelectedIndex == 1)
             {
-                //GridMain.Content = new PenPage();
+                GridMain.Content = new TechSupEmployeePage();
             }
             else if (ListViewMenu.SelectedIndex == 2)
             {

@@ -33,8 +33,8 @@ namespace AKBarsMedApp
                 var user = App.akbmeddbEntities.User.Where(x => x.Login == LoginTB.Text && x.Password == PassPB.Password).FirstOrDefault();
                 if (user != null)
                 {
-                    new HomeWindow().Show();
                     MessageBox.Show("Вы успешно авторизованы");
+                    new HomeWindow().Show();
                     this.Close();
                 }
                 else

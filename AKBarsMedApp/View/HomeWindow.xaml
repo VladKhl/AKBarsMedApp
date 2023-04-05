@@ -6,7 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          xmlns:local="clr-namespace:AKBarsMedApp.View"
         mc:Ignorable="d"
-        Title="AKBMed Logs App" Height="720" Width="1280" ResizeMode="NoResize" Icon="/Assets/logo.ico" WindowStartupLocation="CenterScreen">
+    FontFamily="Bahnschrift"
+    Title="AKBMed Logs App" Height="720" Width="1280" ResizeMode="NoResize" Icon="/Assets/logo.ico" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Storyboard
             x:Key="OpenMenu">
@@ -18,7 +19,7 @@
                     Value="70" />
                 <EasingDoubleKeyFrame
                     KeyTime="0:0:0.2"
-                    Value="200" />
+                    Value="300" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard
@@ -28,7 +29,7 @@
                 Storyboard.TargetName="GridMenu">
                 <EasingDoubleKeyFrame
                     KeyTime="0"
-                    Value="200" />
+                    Value="300" />
                 <EasingDoubleKeyFrame
                     KeyTime="0:0:0.2"
                     Value="70" />
@@ -84,6 +85,12 @@
                             <TranslateTransform />
                         </TransformGroup>
                     </Grid.RenderTransform>
+                    <Image
+                        x:Name="HomeLogoIm"
+                        Source="/Assets/homepagelogo.PNG" 
+                        Height="60"
+                        Margin="0,0,30,0"
+                        Visibility="Hidden"/>
                     <Button
                         x:Name="ButtonOpenMenu"
                         Height="60"
@@ -126,39 +133,7 @@
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     SelectionChanged="ListViewMenu_SelectionChanged">
                     <ListViewItem
-                        x:Name="ItemOrder"
-                        Height="60">
-                        <StackPanel
-                            Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Kind="ClipboardTextMultipleOutline"
-                                Height="25"
-                                Width="25"
-                                Margin="10" />
-                            <TextBlock
-                                Text="Заказы"
-                                VerticalAlignment="Center"
-                                Margin="20 10" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        x:Name="ItemPen"
-                        Height="60">
-                        <StackPanel
-                            Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Kind="Pen"
-                                Height="25"
-                                Width="25"
-                                Margin="10" />
-                            <TextBlock
-                                Text="Ручки"
-                                VerticalAlignment="Center"
-                                Margin="20 10" />
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem
-                        x:Name="ItemClient"
+                        x:Name="ItemEmployee"
                         Height="60">
                         <StackPanel
                             Orientation="Horizontal">
@@ -168,9 +143,61 @@
                                 Width="25"
                                 Margin="10" />
                             <TextBlock
-                                Text="Клиенты"
+                                Text="Сотрудники компании"
+                                FontSize="15"
                                 VerticalAlignment="Center"
-                                Margin="20 10" />
+                                Margin="10 10" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem
+                        x:Name="ItemTechSupEmp"
+                        Height="60">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="AccountWrench"
+                                Height="25"
+                                Width="25"
+                                Margin="10" />
+                            <TextBlock
+                                Text="Сотрудники техподдержки"
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Margin="10 10" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem
+                        x:Name="ItemECPt"
+                        Height="60">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="WebCheck"
+                                Height="25"
+                                Width="25"
+                                Margin="10" />
+                            <TextBlock
+                                Text="Журнал ЭЦП"
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Margin="10 10" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem
+                        x:Name="ItemSZI"
+                        Height="60">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Kind="ServerSecurity"
+                                Height="25"
+                                Width="25"
+                                Margin="10" />
+                            <TextBlock
+                                Text="Журнал СЗИ"
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Margin="10 10" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView>

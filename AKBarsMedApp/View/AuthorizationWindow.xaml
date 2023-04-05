@@ -6,7 +6,13 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:AKBarsMedApp"
         mc:Ignorable="d"
-        Title="AKBMed Logs App" Height="300" Width="300" Icon="\Assets\logo.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    Title="AKBMed Logs App"
+    Height="300"
+    Width="300"
+    Icon="\Assets\logo.ico"
+    ResizeMode="NoResize"
+    FontFamily="Bahnschrift"
+    WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition

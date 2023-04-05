@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище akbmeddbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="id_division" />
+          </Key>
+          <Property Name="id_division" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="200" />
+          <Property Name="id_post" Type="int" Nullable="false" />
+          <Property Name="id_division" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JornalSZI">
+          <Key>
+            <PropertyRef Name="id_szi" />
+          </Key>
+          <Property Name="id_szi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_typeszi" Type="int" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="100" />
+          <Property Name="Serificate" Type="nvarchar" MaxLength="100" />
+          <Property Name="HardwareNum" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateConnect" Type="date" />
+          <Property Name="DateEnd" Type="date" />
+          <Property Name="id_employee" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JournalECP">
+          <Key>
+            <PropertyRef Name="id_ecp" />
+          </Key>
+          <Property Name="id_ecp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberECP" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sender" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateReceipt" Type="date" />
+          <Property Name="id_employee" Type="int" Nullable="false" />
+          <Property Name="DateConnect" Type="date" />
+          <Property Name="id_tecsupemp" Type="int" Nullable="false" />
+          <Property Name="HardwareNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateEnd" Type="date" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="id_post" />
+          </Key>
+          <Property Name="id_post" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TechnicalSupEmployee">
+          <Key>
+            <PropertyRef Name="id_tecsupemp" />
+          </Key>
+          <Property Name="id_tecsupemp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TypeSZI">
+          <Key>
+            <PropertyRef Name="id_typeszi" />
+          </Key>
+          <Property Name="id_typeszi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Employee_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id_division" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_division" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="id_post" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JornalSZI_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="JornalSZI" Type="Self.JornalSZI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="JornalSZI">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JornalSZI_TypeSZI">
+          <End Role="TypeSZI" Type="Self.TypeSZI" Multiplicity="1" />
+          <End Role="JornalSZI" Type="Self.JornalSZI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSZI">
+              <PropertyRef Name="id_typeszi" />
+            </Principal>
+            <Dependent Role="JornalSZI">
+              <PropertyRef Name="id_typeszi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalECP_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="JournalECP" Type="Self.JournalECP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="JournalECP">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalECP_TechnicalSupEmployee">
+          <End Role="TechnicalSupEmployee" Type="Self.TechnicalSupEmployee" Multiplicity="1" />
+          <End Role="JournalECP" Type="Self.JournalECP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSupEmployee">
+              <PropertyRef Name="id_tecsupemp" />
+            </Principal>
+            <Dependent Role="JournalECP">
+              <PropertyRef Name="id_tecsupemp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище akbmeddbModelContainer">
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JornalSZI" EntityType="Self.JornalSZI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JournalECP" EntityType="Self.JournalECP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechnicalSupEmployee" EntityType="Self.TechnicalSupEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeSZI" EntityType="Self.TypeSZI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Division" Association="Self.FK_Employee_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JornalSZI_Employee" Association="Self.FK_JornalSZI_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JornalSZI" EntitySet="JornalSZI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JornalSZI_TypeSZI" Association="Self.FK_JornalSZI_TypeSZI">
+            <End Role="TypeSZI" EntitySet="TypeSZI" />
+            <End Role="JornalSZI" EntitySet="JornalSZI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalECP_Employee" Association="Self.FK_JournalECP_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JournalECP" EntitySet="JournalECP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalECP_TechnicalSupEmployee" Association="Self.FK_JournalECP_TechnicalSupEmployee">
+            <End Role="TechnicalSupEmployee" EntitySet="TechnicalSupEmployee" />
+            <End Role="JournalECP" EntitySet="JournalECP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="akbmeddbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="id_division" />
+          </Key>
+          <Property Name="id_division" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Division" FromRole="Division" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id_employee" />
+          </Key>
+          <Property Name="id_employee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="id_post" Type="Int32" Nullable="false" />
+          <Property Name="id_division" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Employee_Division" FromRole="Employee" ToRole="Division" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Employee_Post" FromRole="Employee" ToRole="Post" />
+          <NavigationProperty Name="JornalSZI" Relationship="Self.FK_JornalSZI_Employee" FromRole="Employee" ToRole="JornalSZI" />
+          <NavigationProperty Name="JournalECP" Relationship="Self.FK_JournalECP_Employee" FromRole="Employee" ToRole="JournalECP" />
+        </EntityType>
+        <EntityType Name="JornalSZI">
+          <Key>
+            <PropertyRef Name="id_szi" />
+          </Key>
+          <Property Name="id_szi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_typeszi" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Serificate" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HardwareNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateConnect" Type="DateTime" Precision="0" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_JornalSZI_Employee" FromRole="JornalSZI" ToRole="Employee" />
+          <NavigationProperty Name="TypeSZI" Relationship="Self.FK_JornalSZI_TypeSZI" FromRole="JornalSZI" ToRole="TypeSZI" />
+        </EntityType>
+        <EntityType Name="JournalECP">
+          <Key>
+            <PropertyRef Name="id_ecp" />
+          </Key>
+          <Property Name="id_ecp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberECP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateReceipt" Type="DateTime" Precision="0" />
+          <Property Name="id_employee" Type="Int32" Nullable="false" />
+          <Property Name="DateConnect" Type="DateTime" Precision="0" />
+          <Property Name="id_tecsupemp" Type="Int32" Nullable="false" />
+          <Property Name="HardwareNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateEnd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_JournalECP_Employee" FromRole="JournalECP" ToRole="Employee" />
+          <NavigationProperty Name="TechnicalSupEmployee" Relationship="Self.FK_JournalECP_TechnicalSupEmployee" FromRole="JournalECP" ToRole="TechnicalSupEmployee" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="id_post" />
+          </Key>
+          <Property Name="id_post" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Post" FromRole="Post" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TechnicalSupEmployee">
+          <Key>
+            <PropertyRef Name="id_tecsupemp" />
+          </Key>
+          <Property Name="id_tecsupemp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JournalECP" Relationship="Self.FK_JournalECP_TechnicalSupEmployee" FromRole="TechnicalSupEmployee" ToRole="JournalECP" />
+        </EntityType>
+        <EntityType Name="TypeSZI">
+          <Key>
+            <PropertyRef Name="id_typeszi" />
+          </Key>
+          <Property Name="id_typeszi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JornalSZI" Relationship="Self.FK_JornalSZI_TypeSZI" FromRole="TypeSZI" ToRole="JornalSZI" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Employee_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id_division" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_division" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="id_post" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="id_post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JornalSZI_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="JornalSZI" Type="Self.JornalSZI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="JornalSZI">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalECP_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="JournalECP" Type="Self.JournalECP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id_employee" />
+            </Principal>
+            <Dependent Role="JournalECP">
+              <PropertyRef Name="id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JornalSZI_TypeSZI">
+          <End Role="TypeSZI" Type="Self.TypeSZI" Multiplicity="1" />
+          <End Role="JornalSZI" Type="Self.JornalSZI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeSZI">
+              <PropertyRef Name="id_typeszi" />
+            </Principal>
+            <Dependent Role="JornalSZI">
+              <PropertyRef Name="id_typeszi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalECP_TechnicalSupEmployee">
+          <End Role="TechnicalSupEmployee" Type="Self.TechnicalSupEmployee" Multiplicity="1" />
+          <End Role="JournalECP" Type="Self.JournalECP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSupEmployee">
+              <PropertyRef Name="id_tecsupemp" />
+            </Principal>
+            <Dependent Role="JournalECP">
+              <PropertyRef Name="id_tecsupemp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="akbmeddbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Division" EntityType="Self.Division" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="JornalSZI" EntityType="Self.JornalSZI" />
+          <EntitySet Name="JournalECP" EntityType="Self.JournalECP" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TechnicalSupEmployee" EntityType="Self.TechnicalSupEmployee" />
+          <EntitySet Name="TypeSZI" EntityType="Self.TypeSZI" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Employee_Division" Association="Self.FK_Employee_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JornalSZI_Employee" Association="Self.FK_JornalSZI_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JornalSZI" EntitySet="JornalSZI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalECP_Employee" Association="Self.FK_JournalECP_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JournalECP" EntitySet="JournalECP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JornalSZI_TypeSZI" Association="Self.FK_JornalSZI_TypeSZI">
+            <End Role="TypeSZI" EntitySet="TypeSZI" />
+            <End Role="JornalSZI" EntitySet="JornalSZI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalECP_TechnicalSupEmployee" Association="Self.FK_JournalECP_TechnicalSupEmployee">
+            <End Role="TechnicalSupEmployee" EntitySet="TechnicalSupEmployee" />
+            <End Role="JournalECP" EntitySet="JournalECP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище akbmeddbModelContainer" CdmEntityContainer="akbmeddbEntities">
+          <EntitySetMapping Name="Division">
+            <EntityTypeMapping TypeName="akbmeddbModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="id_division" ColumnName="id_division" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="akbmeddbModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="id_post" ColumnName="id_post" />
+                <ScalarProperty Name="id_division" ColumnName="id_division" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JornalSZI">
+            <EntityTypeMapping TypeName="akbmeddbModel.JornalSZI">
+              <MappingFragment StoreEntitySet="JornalSZI">
+                <ScalarProperty Name="id_szi" ColumnName="id_szi" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id_typeszi" ColumnName="id_typeszi" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Serificate" ColumnName="Serificate" />
+                <ScalarProperty Name="HardwareNum" ColumnName="HardwareNum" />
+                <ScalarProperty Name="DateConnect" ColumnName="DateConnect" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JournalECP">
+            <EntityTypeMapping TypeName="akbmeddbModel.JournalECP">
+              <MappingFragment StoreEntitySet="JournalECP">
+                <ScalarProperty Name="id_ecp" ColumnName="id_ecp" />
+                <ScalarProperty Name="NumberECP" ColumnName="NumberECP" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="DateReceipt" ColumnName="DateReceipt" />
+                <ScalarProperty Name="id_employee" ColumnName="id_employee" />
+                <ScalarProperty Name="DateConnect" ColumnName="DateConnect" />
+                <ScalarProperty Name="id_tecsupemp" ColumnName="id_tecsupemp" />
+                <ScalarProperty Name="HardwareNum" ColumnName="HardwareNum" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="akbmeddbModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="id_post" ColumnName="id_post" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="akbmeddbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechnicalSupEmployee">
+            <EntityTypeMapping TypeName="akbmeddbModel.TechnicalSupEmployee">
+              <MappingFragment StoreEntitySet="TechnicalSupEmployee">
+                <ScalarProperty Name="id_tecsupemp" ColumnName="id_tecsupemp" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeSZI">
+            <EntityTypeMapping TypeName="akbmeddbModel.TypeSZI">
+              <MappingFragment StoreEntitySet="TypeSZI">
+                <ScalarProperty Name="id_typeszi" ColumnName="id_typeszi" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="akbmeddbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

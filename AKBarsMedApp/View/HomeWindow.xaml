@@ -7,7 +7,7 @@
          xmlns:local="clr-namespace:AKBarsMedApp.View"
         mc:Ignorable="d"
     FontFamily="Bahnschrift"
-    Title="AKBMed Logs App" Height="720" Width="1280" ResizeMode="NoResize" Icon="/Assets/logo.ico" WindowStartupLocation="CenterScreen">
+    Title="AKBMed Logs App" WindowState="Maximized" Icon="/Assets/logo.ico" >
     <Window.Resources>
         <Storyboard
             x:Key="OpenMenu">
@@ -53,14 +53,13 @@
     <Grid
         Background="White">
         <Image
-            Source="/Assets/mainpic.jpg" Height="500" Margin="170,20,100,20"/>
+            Source="/Assets/mainpic.jpg" Height="800" Margin="170,20,100,20"/>
         <Frame
             x:Name="GridMain"
             NavigationUIVisibility="Hidden"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Height="704"
-            Width="1209" />
+            Height="1080"
+            Margin="70,0,0,0"
+            Width="1850" />
         <Grid
             x:Name="GridMenu"
             Width="70"

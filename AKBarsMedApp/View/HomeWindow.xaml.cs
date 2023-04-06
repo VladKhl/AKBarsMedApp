@@ -50,7 +50,7 @@ namespace AKBarsMedApp.View
             }
             else if (ListViewMenu.SelectedIndex == 2)
             {
-                //GridMain.Content = new ClientsPage();
+                GridMain.Content = new ECPLogPage();
             }
         }
     }

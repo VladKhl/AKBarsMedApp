@@ -40,6 +40,21 @@ namespace AKBarsMedApp.View
                 WordDocumentWriter docWriter = WordDocumentWriter.Create(saveFileDialog1.FileName);
                 docWriter.StartDocument();
 
+                ParagraphProperties paragraphProps = docWriter.CreateParagraphProperties();
+                paragraphProps.Alignment = ParagraphAlignment.Right;
+                paragraphProps.SpacingAfter = 10;
+
+                //fonts
+                Font fontheader = docWriter.CreateFont();
+                fontheader.Bold = true;
+                fontheader.Size = 9;
+                
+                Font fontcell = docWriter.CreateFont();
+                fontcell.Size = 8;
+
+                Font fonttime = docWriter.CreateFont();
+                fonttime.Size = 7;
+
                 TableBorderProperties borderProps = docWriter.CreateTableBorderProperties();
                 borderProps.Color = Colors.Black;
                 borderProps.Style = TableBorderStyle.Single;
@@ -56,19 +71,59 @@ namespace AKBarsMedApp.View
                 cellProps.BackColor = Colors.White;
                 cellProps.TextDirection = TableCellTextDirection.LeftToRightTopToBottom;
 
-                docWriter.StartTable(2, tableProps);
+                docWriter.StartParagraph(paragraphProps);
+                docWriter.AddTextRun($"Журнал сформирован {DateTime.Now}", fonttime);
+                docWriter.EndParagraph();
+
+                docWriter.StartTable(8, tableProps);
 
                 //headerrows
                 docWriter.StartTableRow(rowProps);
                 docWriter.StartTableCell(cellProps);
                 docWriter.StartParagraph();
-                docWriter.AddTextRun("Серийные номера СКЗИ");
+                docWriter.AddTextRun("Серийные номера СКЗИ", fontheader);
                 docWriter.EndParagraph();
                 docWriter.EndTableCell();
 
                 docWriter.StartTableCell(cellProps);
                 docWriter.StartParagraph();
-                docWriter.AddTextRun("От кого получены");
+                docWriter.AddTextRun("От кого получены", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("Дата получения", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("ФИО пользователя СКЗИ", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("Дата подключения", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("ФИО сотрудника, произведшего подключение", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("Номера аппаратных средств, к которым подключены СКЗИ", fontheader);
+                docWriter.EndParagraph();
+                docWriter.EndTableCell();
+
+                docWriter.StartTableCell(cellProps);
+                docWriter.StartParagraph();
+                docWriter.AddTextRun("Дата изьятия", fontheader);
                 docWriter.EndParagraph();
                 docWriter.EndTableCell();
 
@@ -81,19 +136,61 @@ namespace AKBarsMedApp.View
                     docWriter.StartTableRow();
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun($"{sziitem.NumberECP}");
+                    docWriter.AddTextRun($"{sziitem.NumberECP}", fontcell);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun($"{sziitem.Sender}");
+                    docWriter.AddTextRun($"{sziitem.Sender}", fontcell);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateReceipt)}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{sziitem.Employee.FullName}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateConnect)}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{sziitem.TechnicalSupEmployee.FullName}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{sziitem.HardwareNum}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateEnd)}", fontcell);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
                     docWriter.EndTableRow();
                 }
-
                 docWriter.EndTable();
+
+                SectionProperties secProperties = docWriter.CreateSectionProperties();
+                secProperties.PageOrientation = PageOrientation.Landscape;
+                secProperties.PageMargins = new Padding(30, 30, 30, 0);
+                docWriter.DefineSection(secProperties);
+
                 docWriter.EndDocument();
                 docWriter.Close();
             }

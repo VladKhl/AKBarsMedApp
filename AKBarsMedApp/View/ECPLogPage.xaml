@@ -64,12 +64,12 @@
         </DataGrid>
         <Button
             x:Name="CreateLogBtn"
-            Grid.Row="1"
+            VerticalAlignment="Bottom"
             Content="Сфррмировать отчет"
             Click="CreateLogBtn_Click"
             Foreground="White"
             HorizontalAlignment="Right"
-            Height="27"
+            Height="35"
             Width="200" />
     </Grid>
 </Page>

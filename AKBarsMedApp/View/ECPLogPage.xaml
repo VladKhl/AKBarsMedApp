@@ -23,6 +23,7 @@
         <DatePicker
             x:Name="DateFirstDP"
             FontSize="15"
+            Focusable="False"
             SelectedDateChanged="DateFirstDP_SelectedDateChanged"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
@@ -37,6 +38,7 @@
         <DatePicker
             x:Name="DateSecondDP"
             FontSize="15"
+            Focusable="False"
             SelectedDateChanged="DateSecondDP_SelectedDateChanged"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"

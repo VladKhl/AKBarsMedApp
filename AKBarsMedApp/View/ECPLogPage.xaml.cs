@@ -24,10 +24,11 @@ namespace AKBarsMedApp.View
     /// </summary>
     public partial class ECPLogPage : System.Windows.Controls.Page
     {
+        List<JournalECP> ecplst = App.akbmeddbEntities.JournalECP.ToList();
         public ECPLogPage()
         {
             InitializeComponent();
-            ECPLogDG.ItemsSource = App.akbmeddbEntities.JournalECP.ToList();
+            ECPLogDG.ItemsSource = ecplst;
         }
 
         private void CreateLogBtn_Click(object sender, RoutedEventArgs e)
@@ -130,8 +131,8 @@ namespace AKBarsMedApp.View
                 docWriter.EndTableRow();
 
                 //export
-                List<JournalECP> szilst = App.akbmeddbEntities.JournalECP.ToList();
-                foreach (JournalECP sziitem in szilst)
+                
+                foreach (JournalECP sziitem in ecplst)
                 {
                     docWriter.StartTableRow();
                     docWriter.StartTableCell(cellProps);
@@ -207,6 +208,15 @@ namespace AKBarsMedApp.View
             {
                 DateFirstDP.SelectedDate = null;
             }
+            if (DateFirstDP.SelectedDate != null)
+            {
+                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+            }
+            else
+            {
+                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+            }
+            ECPLogDG.ItemsSource = ecplst;
         }
 
         private void DateFirstDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -216,12 +226,23 @@ namespace AKBarsMedApp.View
             {
                 DateSecondDP.SelectedDate = null;
             }
+            if (DateSecondDP.SelectedDate != null)
+            {
+                ecplst = App.akbmeddbEntities.JournalECP.Where(x=> x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+            }
+            else
+            {
+                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect >= DateFirstDP.SelectedDate).ToList();
+            }
+            ECPLogDG.ItemsSource = ecplst;
         }
 
         private void ClearDateBtn_Click(object sender, RoutedEventArgs e)
         {
             DateSecondDP.SelectedDate = null;
             DateFirstDP.SelectedDate= null;
+            ecplst = App.akbmeddbEntities.JournalECP.ToList();
+            ECPLogDG.ItemsSource = ecplst;
         }
     }
 }

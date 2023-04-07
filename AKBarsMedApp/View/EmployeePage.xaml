@@ -11,12 +11,12 @@
     FontFamily="Bahnschrift"
     Background="White"
     Title="EmployeePage">
-    <Grid
-        Margin="60">
+    <Grid>
         <DataGrid
             x:Name="EmployeesDG"
             AutoGenerateColumns="False"
             IsReadOnly="True"
+            Margin="60,100,60,60"
             BorderBrush="Green"
             Background="White"
             RowHeight="50"

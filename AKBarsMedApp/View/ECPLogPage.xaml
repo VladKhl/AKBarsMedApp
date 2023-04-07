@@ -11,17 +11,52 @@
     FontFamily="Bahnschrift"
     Background="White"
     Title="ECPLogPage">
-    <Grid
-        Margin="60">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition
                 Height="*" />
             <RowDefinition
                 Height="40" />
         </Grid.RowDefinitions>
+        <TextBlock
+            Text="Сортировать по дате подключения с" FontSize="15" Margin="60,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <DatePicker
+            x:Name="DateFirstDP"
+            FontSize="15"
+            SelectedDateChanged="DateFirstDP_SelectedDateChanged"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="100"
+            Margin="330,52,0,0" />
+        <TextBlock
+            Text="по"
+            FontSize="15"
+            Margin="450,60,0,0"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left" />
+        <DatePicker
+            x:Name="DateSecondDP"
+            FontSize="15"
+            SelectedDateChanged="DateSecondDP_SelectedDateChanged"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="100"
+            Margin="485,52,0,0" />
+        <Button
+            x:Name="ClearDateBtn"
+            FontSize="15"
+            Click="ClearDateBtn_Click"
+            Foreground="White"
+            Content="Сбросить"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="100"
+            Height="27"
+            Margin="600,52,0,0" />
         <DataGrid
             x:Name="ECPLogDG"
             Grid.Row="0"
+            Margin="60,100,60,60"
             AutoGenerateColumns="False"
             IsReadOnly="True"
             BorderBrush="Green"
@@ -68,6 +103,7 @@
             Content="Сфррмировать отчет"
             Click="CreateLogBtn_Click"
             Foreground="White"
+            Margin="0,0,60,60"
             HorizontalAlignment="Right"
             Height="35"
             Width="200" />

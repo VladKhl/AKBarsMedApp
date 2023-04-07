@@ -199,5 +199,29 @@ namespace AKBarsMedApp.View
                 wordDocument.Close();
             }
         }
+
+        private void DateSecondDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateFirstDP.DisplayDateEnd = DateSecondDP.SelectedDate;
+            if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
+            {
+                DateFirstDP.SelectedDate = null;
+            }
+        }
+
+        private void DateFirstDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateSecondDP.DisplayDateStart = DateFirstDP.SelectedDate;
+            if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
+            {
+                DateSecondDP.SelectedDate = null;
+            }
+        }
+
+        private void ClearDateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            DateSecondDP.SelectedDate = null;
+            DateFirstDP.SelectedDate= null;
+        }
     }
 }

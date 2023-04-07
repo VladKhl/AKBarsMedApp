@@ -186,13 +186,17 @@ namespace AKBarsMedApp.View
                 }
                 docWriter.EndTable();
 
-                SectionProperties secProperties = docWriter.CreateSectionProperties();
-                secProperties.PageOrientation = PageOrientation.Landscape;
-                secProperties.PageMargins = new Padding(30, 30, 30, 0);
-                docWriter.DefineSection(secProperties);
-
                 docWriter.EndDocument();
                 docWriter.Close();
+
+                Microsoft.Office.Interop.Word.Application appWord = new Microsoft.Office.Interop.Word.Application();
+                Microsoft.Office.Interop.Word.Document wordDocument = appWord.Documents.Open(saveFileDialog1.FileName);
+                wordDocument.PageSetup.Orientation = Microsoft.Office.Interop.Word.WdOrientation.wdOrientLandscape;
+                wordDocument.PageSetup.LeftMargin = 30;
+                wordDocument.PageSetup.RightMargin = 30;
+                wordDocument.PageSetup.TopMargin = 30;
+                wordDocument.Save();
+                wordDocument.Close();
             }
         }
     }

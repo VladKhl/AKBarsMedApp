@@ -30,11 +30,6 @@ namespace AKBarsMedApp.View
             SZILogDG.ItemsSource = szilst;
         }
 
-        private void UsableSZICB_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void CreateLogBtn_Click(object sender, RoutedEventArgs e)
         {
             if (szilst.Count > 0)
@@ -214,6 +209,7 @@ namespace AKBarsMedApp.View
 
         private void DateSecondDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            UsableSZICB.IsChecked = false;
             DateFirstDP.DisplayDateEnd = DateSecondDP.SelectedDate;
             if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
             {
@@ -232,6 +228,7 @@ namespace AKBarsMedApp.View
 
         private void DateFirstDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            UsableSZICB.IsChecked = false;
             DateSecondDP.DisplayDateStart = DateFirstDP.SelectedDate;
             if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
             {
@@ -252,7 +249,17 @@ namespace AKBarsMedApp.View
         {
             DateSecondDP.SelectedDate = null;
             DateFirstDP.SelectedDate = null;
+            UsableSZICB.IsChecked = false;
             szilst = App.akbmeddbEntities.JornalSZI.ToList();
+            SZILogDG.ItemsSource = szilst;
+        }
+
+        private void UsableSZICB_Click(object sender, RoutedEventArgs e)
+        {
+            DateSecondDP.SelectedDate = null;
+            DateFirstDP.SelectedDate = null;
+            UsableSZICB.IsChecked = true;
+            szilst = App.akbmeddbEntities.JornalSZI.Where(x => x.DateEnd >= DateTime.Now).ToList();
             SZILogDG.ItemsSource = szilst;
         }
     }

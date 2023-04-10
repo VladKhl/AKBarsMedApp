@@ -88,6 +88,9 @@
     <Compile Include="View\HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SZILogPage.xaml.cs">
+      <DependentUpon>SZILogPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TechSupEmployeePage.xaml.cs">
       <DependentUpon>TechSupEmployeePage.xaml</DependentUpon>
     </Compile>
@@ -154,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HomeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SZILogPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

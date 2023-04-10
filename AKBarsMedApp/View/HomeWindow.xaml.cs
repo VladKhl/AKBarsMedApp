@@ -52,6 +52,10 @@ namespace AKBarsMedApp.View
             {
                 GridMain.Content = new ECPLogPage();
             }
+            else if (ListViewMenu.SelectedIndex == 3)
+            {
+                GridMain.Content = new SZILogPage();
+            }
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using AKBarsMedApp.Database;
+using Infragistics.Documents.Word;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,26 +15,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Infragistics.Documents.Word;
-using AKBarsMedApp.Database;
 
 namespace AKBarsMedApp.View
 {
     /// <summary>
-    /// Логика взаимодействия для ECPLogPage.xaml
+    /// Логика взаимодействия для SZILogPage.xaml
     /// </summary>
-    public partial class ECPLogPage : System.Windows.Controls.Page
+    public partial class SZILogPage : Page
     {
-        List<JournalECP> ecplst = App.akbmeddbEntities.JournalECP.ToList();
-        public ECPLogPage()
+        List<JornalSZI> szilst = App.akbmeddbEntities.JornalSZI.ToList();
+        public SZILogPage()
         {
             InitializeComponent();
-            ECPLogDG.ItemsSource = ecplst;
+            SZILogDG.ItemsSource = szilst;
+        }
+
+        private void UsableSZICB_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void CreateLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (ecplst.Count > 0)
+            if (szilst.Count > 0)
             {
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "Word Documents (.docx)|*.docx";
@@ -84,25 +88,31 @@ namespace AKBarsMedApp.View
                     docWriter.StartTableRow(rowProps);
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("Серийные номера СКЗИ", fontheader);
+                    docWriter.AddTextRun("Наименование СЗИ", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("От кого получены", fontheader);
+                    docWriter.AddTextRun("Тип СЗИ", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("Дата получения", fontheader);
+                    docWriter.AddTextRun("Номер знака соответствия", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("ФИО пользователя СКЗИ", fontheader);
+                    docWriter.AddTextRun("Сертификат", fontheader);
+                    docWriter.EndParagraph();
+                    docWriter.EndTableCell();
+
+                    docWriter.StartTableCell(cellProps);
+                    docWriter.StartParagraph();
+                    docWriter.AddTextRun("Номера аппаратных средств, к которым подключены СЗИ", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
@@ -114,19 +124,13 @@ namespace AKBarsMedApp.View
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("ФИО сотрудника, произведшего подключение", fontheader);
+                    docWriter.AddTextRun("Дата изъятия", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
                     docWriter.StartTableCell(cellProps);
                     docWriter.StartParagraph();
-                    docWriter.AddTextRun("Номера аппаратных средств, к которым подключены СКЗИ", fontheader);
-                    docWriter.EndParagraph();
-                    docWriter.EndTableCell();
-
-                    docWriter.StartTableCell(cellProps);
-                    docWriter.StartParagraph();
-                    docWriter.AddTextRun("Дата изьятия", fontheader);
+                    docWriter.AddTextRun("Пользователь, ответственный за эксплуатацию СЗИ", fontheader);
                     docWriter.EndParagraph();
                     docWriter.EndTableCell();
 
@@ -134,42 +138,30 @@ namespace AKBarsMedApp.View
 
                     //export
 
-                    foreach (JournalECP sziitem in ecplst)
+                    foreach (JornalSZI sziitem in szilst)
                     {
                         docWriter.StartTableRow();
                         docWriter.StartTableCell(cellProps);
                         docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{sziitem.NumberECP}", fontcell);
+                        docWriter.AddTextRun($"{sziitem.Name}", fontcell);
                         docWriter.EndParagraph();
                         docWriter.EndTableCell();
 
                         docWriter.StartTableCell(cellProps);
                         docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{sziitem.Sender}", fontcell);
+                        docWriter.AddTextRun($"{sziitem.TypeSZI.Name}", fontcell);
                         docWriter.EndParagraph();
                         docWriter.EndTableCell();
 
                         docWriter.StartTableCell(cellProps);
                         docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateReceipt)}", fontcell);
+                        docWriter.AddTextRun($"{sziitem.Number}", fontcell);
                         docWriter.EndParagraph();
                         docWriter.EndTableCell();
 
                         docWriter.StartTableCell(cellProps);
                         docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{sziitem.Employee.FullName}", fontcell);
-                        docWriter.EndParagraph();
-                        docWriter.EndTableCell();
-
-                        docWriter.StartTableCell(cellProps);
-                        docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateConnect)}", fontcell);
-                        docWriter.EndParagraph();
-                        docWriter.EndTableCell();
-
-                        docWriter.StartTableCell(cellProps);
-                        docWriter.StartParagraph();
-                        docWriter.AddTextRun($"{sziitem.TechnicalSupEmployee.FullName}", fontcell);
+                        docWriter.AddTextRun($"{sziitem.Serificate}", fontcell);
                         docWriter.EndParagraph();
                         docWriter.EndTableCell();
 
@@ -181,7 +173,19 @@ namespace AKBarsMedApp.View
 
                         docWriter.StartTableCell(cellProps);
                         docWriter.StartParagraph();
+                        docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateConnect)}", fontcell);
+                        docWriter.EndParagraph();
+                        docWriter.EndTableCell();
+
+                        docWriter.StartTableCell(cellProps);
+                        docWriter.StartParagraph();
                         docWriter.AddTextRun($"{String.Format("{0:dd.MM.yyyy}", sziitem.DateEnd)}", fontcell);
+                        docWriter.EndParagraph();
+                        docWriter.EndTableCell();
+
+                        docWriter.StartTableCell(cellProps);
+                        docWriter.StartParagraph();
+                        docWriter.AddTextRun($"{sziitem.Employee.FullName}", fontcell);
                         docWriter.EndParagraph();
                         docWriter.EndTableCell();
 
@@ -210,8 +214,6 @@ namespace AKBarsMedApp.View
 
         private void DateSecondDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateUsableCB.SelectedIndex = -1;
-            DateUsableCB.Text = "По оставшемуся сроку действия:";
             DateFirstDP.DisplayDateEnd = DateSecondDP.SelectedDate;
             if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
             {
@@ -219,19 +221,17 @@ namespace AKBarsMedApp.View
             }
             if (DateFirstDP.SelectedDate != null)
             {
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+                szilst = App.akbmeddbEntities.JornalSZI.Where(x => x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
             }
             else
             {
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+                szilst = App.akbmeddbEntities.JornalSZI.Where(x => x.DateConnect <= DateSecondDP.SelectedDate).ToList();
             }
-            ECPLogDG.ItemsSource = ecplst;
+            SZILogDG.ItemsSource = szilst;
         }
 
         private void DateFirstDP_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateUsableCB.SelectedIndex = -1;
-            DateUsableCB.Text = "По оставшемуся сроку действия:";
             DateSecondDP.DisplayDateStart = DateFirstDP.SelectedDate;
             if (DateFirstDP.SelectedDate > DateSecondDP.SelectedDate)
             {
@@ -239,42 +239,21 @@ namespace AKBarsMedApp.View
             }
             if (DateSecondDP.SelectedDate != null)
             {
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x=> x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
+                szilst = App.akbmeddbEntities.JornalSZI.Where(x => x.DateConnect >= DateFirstDP.SelectedDate && x.DateConnect <= DateSecondDP.SelectedDate).ToList();
             }
             else
             {
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateConnect >= DateFirstDP.SelectedDate).ToList();
+                szilst = App.akbmeddbEntities.JornalSZI.Where(x => x.DateConnect >= DateFirstDP.SelectedDate).ToList();
             }
-            ECPLogDG.ItemsSource = ecplst;
+            SZILogDG.ItemsSource = szilst;
         }
 
         private void ClearDateBtn_Click(object sender, RoutedEventArgs e)
         {
             DateSecondDP.SelectedDate = null;
-            DateFirstDP.SelectedDate= null;
-            DateUsableCB.SelectedIndex = -1;
-            DateUsableCB.Text = "По оставшемуся сроку действия:";
-            ecplst = App.akbmeddbEntities.JournalECP.ToList();
-            ECPLogDG.ItemsSource = ecplst;
-        }
-
-        private void DateUsableCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DateUsableCB.SelectedIndex == 0)
-            {
-                DateSecondDP.SelectedDate = null;
-                DateFirstDP.SelectedDate = null;
-                DateTime dateusable = DateTime.Now.AddDays(14);
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x=> x.DateEnd < dateusable).ToList();
-            }
-            else if (DateUsableCB.SelectedIndex == 1)
-            {
-                DateSecondDP.SelectedDate = null;
-                DateFirstDP.SelectedDate = null;
-                DateTime dateusable = DateTime.Now.AddMonths(1);
-                ecplst = App.akbmeddbEntities.JournalECP.Where(x => x.DateEnd < dateusable).ToList();
-            }
-            ECPLogDG.ItemsSource = ecplst;
+            DateFirstDP.SelectedDate = null;
+            szilst = App.akbmeddbEntities.JornalSZI.ToList();
+            SZILogDG.ItemsSource = szilst;
         }
     }
 }

@@ -37,6 +37,7 @@ namespace AKBarsMedApp.View
             {
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "Word Documents (.docx)|*.docx";
+                saveFileDialog1.FileName = $"Журнал ЭЦП {String.Format("{0:dd.MM.yyyy}", DateTime.Now)}";
                 if (saveFileDialog1.ShowDialog() == true)
                 {
                     //tableproperties
